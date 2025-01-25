@@ -819,7 +819,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   turnStrength: 750
   driftSteerMultiplier: 1.5
-  brakeTorque: 10000
+  brakeTorque: 1000
   centerOfMass: {fileID: 7199492006755286778}
   downForce: 50
   gravity: -9.81
