@@ -13,10 +13,11 @@ public class GameStateManager : NetworkBehaviour
     public GameObject[] checkpoints;
     
     public TMP_Text gameWonText;
+    public TMP_Text gameStarsText;
     
     private Dictionary<ulong, int> playerToCheckPoint = new Dictionary<ulong, int>();
-    private Dictionary<ulong, GameObject> playerIdToPlayer = new Dictionary<ulong, GameObject>();
-    private List<GameObject> grasses = new List<GameObject>();
+    private bool isGameStarted = false;
+    private int gameStartsIn = 10;
 
     private void Awake() 
     { 
@@ -29,8 +30,16 @@ public class GameStateManager : NetworkBehaviour
         else 
         { 
             Instance = this; 
-        } 
-        grasses.AddRange(GameObject.FindGameObjectsWithTag("Grass"));
+        }
+        StartCoroutine(CountDown());
+    }
+
+    private void Update()
+    {
+        if (!isGameStarted)
+        {
+            gameStarsText.text = "Game starts in " + gameStartsIn;
+        }
     }
 
     public void AddPlayer(ulong playerId, GameObject player)
@@ -40,7 +49,6 @@ public class GameStateManager : NetworkBehaviour
             return;
         }
         playerToCheckPoint.Add(playerId, 0);
-        playerIdToPlayer.Add(playerId, player);
     }
 
     public void PassCheckpoint(GameObject checkPoint, GameObject player)
@@ -124,5 +132,25 @@ public class GameStateManager : NetworkBehaviour
         grass.SetActive(false);
         yield return new WaitForSeconds(timeToRespawn);
         grass.SetActive(true);
+    }
+    
+    IEnumerator CountDown()
+    {
+        yield return new WaitForSeconds(1f);
+        gameStartsIn--;
+        if (gameStartsIn > 0)
+        {
+            StartCoroutine(CountDown());
+        }
+        else
+        {
+            gameStarsText.gameObject.SetActive(false);
+            isGameStarted = true;
+        }
+    }
+
+    public bool GetIsGameStarted()
+    {
+        return isGameStarted;
     }
 }

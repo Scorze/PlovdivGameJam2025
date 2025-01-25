@@ -242,6 +242,10 @@ namespace Kart {
         }
 
         void Update() {
+            if (!GameStateManager.Instance.GetIsGameStarted())
+            {
+                return;
+            }
             networkTimer.Update(Time.deltaTime);
             reconciliationTimer.Tick(Time.deltaTime);
             extrapolationTimer.Tick(Time.deltaTime);
@@ -259,6 +263,10 @@ namespace Kart {
         }
 
         void FixedUpdate() {
+            if (!GameStateManager.Instance.GetIsGameStarted())
+            {
+                return;
+            }
             while (networkTimer.ShouldTick()) {
                 HandleClientTick();
                 HandleServerTick();
