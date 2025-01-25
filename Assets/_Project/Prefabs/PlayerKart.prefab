@@ -818,8 +818,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  turnStrength: 750
-  driftSteerMultiplier: 1.5
+  turnStrength: 400
+  driftSteerMultiplier: 1.3
   brakeTorque: 1000
   centerOfMass: {fileID: 7199492006755286778}
   downForce: 50

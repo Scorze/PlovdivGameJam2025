@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -145,11 +146,22 @@ namespace Kart {
         [SerializeField] TextMeshPro clientRpcText;
         
         private int grassEaten = 0;
+        private bool isFat = false;
         private OwnerNetworkAnimator animator;
+        private SkinnedMeshRenderer fatMeshRenderer;
 
         void Awake() {
             if (playerInput is IDrive driveInput) {
                 input = driveInput;
+            }
+            
+            var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
+            {
+                if (skinnedMeshRenderer.name == "GoattBod")
+                {
+                    fatMeshRenderer = skinnedMeshRenderer;
+                }
             }
             
             animator = GetComponentInChildren<OwnerNetworkAnimator>();
@@ -188,6 +200,18 @@ namespace Kart {
                 extrapolationState = default;
                 //SwitchAuthorityMode(AuthorityMode.Client);
             };
+        }
+
+        private void LateUpdate()
+        {
+            if (isFat)
+            {
+                fatMeshRenderer.SetBlendShapeWeight(0 , 100);
+            }
+            else
+            {
+                fatMeshRenderer.SetBlendShapeWeight(0 , 1);
+            }
         }
 
         void SwitchAuthorityMode(AuthorityMode mode) {
@@ -564,25 +588,25 @@ namespace Kart {
 
         public void EatGrass()
         {
-            print("EatGrass in controller");
+            if (isFat)
+            {
+                return;
+            }
+            
             grassEaten++;
             if (grassEaten >= 3)
             {
-                var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-                SkinnedMeshRenderer fatMeshRenderer = null;
-                foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
-                {
-                    if (skinnedMeshRenderer.name == "GoattBod")
-                    {
-                        fatMeshRenderer = skinnedMeshRenderer;
-                    }
-                }
-                
-                if (fatMeshRenderer != null)
-                {
-                    fatMeshRenderer.SetBlendShapeWeight(0 , 100);
-                }
+                grassEaten = 0;
+                isFat = true;
+                maxSpeed *= 2;
+                StartCoroutine(RemoveFat(5f));
             }
+        }
+        
+        IEnumerator RemoveFat(float timeOfFat) {
+            yield return new WaitForSeconds(timeOfFat);
+            maxSpeed /= 2;
+            isFat = false;
         }
     }
 }
