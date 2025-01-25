@@ -218,9 +218,6 @@ namespace Kart {
             Extraplolate();
 
             playerText.SetText($"Owner: {IsOwner} NetworkObjectId: {NetworkObjectId} Velocity: {kartVelocity.magnitude:F1}");
-            if (Input.GetKeyDown(KeyCode.Q)) {
-                transform.position += transform.forward * 20f;
-            }
         }
 
         void FixedUpdate() {
