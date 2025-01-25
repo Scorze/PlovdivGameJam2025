@@ -29,7 +29,7 @@ namespace Kart {
                     Debug.Log($"[Spawning] Client-{clientId} is spawning at spawn point-{currentSpawnPoint} with a position of {spawnPoints[currentSpawnPoint].position}.");
                     GameObject instantiatedPlayer = Instantiate(playerKartPrefab, spawnPoints[currentSpawnPoint].position, spawnPoints[currentSpawnPoint].rotation);
                     instantiatedPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-                    GameStateManager.Instance.AddPlayer(clientId);
+                    GameStateManager.Instance.AddPlayer(clientId, instantiatedPlayer);
                     currentSpawnPoint++;
                 }
             }
@@ -45,7 +45,7 @@ namespace Kart {
             Debug.Log($"[Spawning] Client-{clientId} is spawning at spawn point-{currentSpawnPoint} with a position of {spawnPoints[currentSpawnPoint].position}.");
             GameObject instantiatedPlayer = Instantiate(playerKartPrefab, spawnPoints[currentSpawnPoint].position, spawnPoints[currentSpawnPoint].rotation);
             instantiatedPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-            GameStateManager.Instance.AddPlayer(clientId);
+            GameStateManager.Instance.AddPlayer(clientId, instantiatedPlayer);
             currentSpawnPoint++;
         }
         // Use this to spawn objects
