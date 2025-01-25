@@ -5,6 +5,7 @@ using Kart;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : NetworkBehaviour
 {
@@ -17,7 +18,7 @@ public class GameStateManager : NetworkBehaviour
     
     private Dictionary<ulong, int> playerToCheckPoint = new Dictionary<ulong, int>();
     private bool isGameStarted = false;
-    private int gameStartsIn = 3;
+    public int gameStartsIn = 10;
 
     private void Awake() 
     { 
@@ -31,7 +32,19 @@ public class GameStateManager : NetworkBehaviour
         { 
             Instance = this; 
         }
-        StartCoroutine(CountDown());
+    }
+    
+    public override void OnNetworkSpawn()
+    {
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
+    {
+        if (IsHost)
+        {
+            StartCoroutine(CountDown());
+        }
     }
 
     private void Update()
@@ -138,11 +151,23 @@ public class GameStateManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(1f);
         gameStartsIn--;
+        CountDownClientRpc(gameStartsIn);
         if (gameStartsIn > 0)
         {
             StartCoroutine(CountDown());
         }
         else
+        {
+            gameStarsText.gameObject.SetActive(false);
+            isGameStarted = true;
+        }
+    }
+
+    [ClientRpc]
+    void CountDownClientRpc(int gameStartsIn)
+    {
+        this.gameStartsIn = gameStartsIn;
+        if (gameStartsIn <= 0)
         {
             gameStarsText.gameObject.SetActive(false);
             isGameStarted = true;
