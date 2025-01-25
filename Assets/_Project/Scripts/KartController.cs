@@ -602,13 +602,13 @@ namespace Kart {
             }
             
             grassEaten++;
-            if (grassEaten >= 3)
+            if (grassEaten >= 1)
             {
                 grassEaten = 0;
                 isFat = true;
                 maxSpeed *= 2;
                 animator.SetTrigger(Animator.StringToHash("isRolling"), true);
-                StartCoroutine(RemoveFat(5f));
+                StartCoroutine(RemoveFat(2.5f));
             }
         }
         
