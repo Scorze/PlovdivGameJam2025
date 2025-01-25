@@ -148,7 +148,7 @@ namespace Kart {
         private int grassEaten = 0;
         private bool isFat = false;
         private OwnerNetworkAnimator animator;
-        private SkinnedMeshRenderer fatMeshRenderer;
+        //private SkinnedMeshRenderer fatMeshRenderer;
 
         void Awake() {
             if (playerInput is IDrive driveInput) {
@@ -156,13 +156,13 @@ namespace Kart {
             }
             
             var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
-            foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
+            /*foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
             {
                 if (skinnedMeshRenderer.name == "GoattBod")
                 {
                     fatMeshRenderer = skinnedMeshRenderer;
                 }
-            }
+            }*/
             
             animator = GetComponentInChildren<OwnerNetworkAnimator>();
             
@@ -202,7 +202,7 @@ namespace Kart {
             };
         }
 
-        private void LateUpdate()
+        /*private void LateUpdate()
         {
             if (isFat)
             {
@@ -212,7 +212,7 @@ namespace Kart {
             {
                 fatMeshRenderer.SetBlendShapeWeight(0 , 1);
             }
-        }
+        }*/
 
         void SwitchAuthorityMode(AuthorityMode mode) {
             clientNetworkTransform.authorityMode = mode;
@@ -599,6 +599,7 @@ namespace Kart {
                 grassEaten = 0;
                 isFat = true;
                 maxSpeed *= 2;
+                animator.SetTrigger(Animator.StringToHash("isRolling"), true);
                 StartCoroutine(RemoveFat(5f));
             }
         }
@@ -607,6 +608,7 @@ namespace Kart {
             yield return new WaitForSeconds(timeOfFat);
             maxSpeed /= 2;
             isFat = false;
+            animator.SetTrigger(Animator.StringToHash("isRolling"), false);
         }
     }
 }
