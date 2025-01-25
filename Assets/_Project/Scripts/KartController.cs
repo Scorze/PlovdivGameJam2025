@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Cinemachine;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 using Utilities;
 
@@ -142,11 +144,27 @@ namespace Kart {
         [SerializeField] TextMeshPro playerText;
         [SerializeField] TextMeshPro serverRpcText;
         [SerializeField] TextMeshPro clientRpcText;
+        
+        private int grassEaten = 0;
+        private bool isFat = false;
+        private OwnerNetworkAnimator animator;
+        private SkinnedMeshRenderer fatMeshRenderer;
 
         void Awake() {
             if (playerInput is IDrive driveInput) {
                 input = driveInput;
             }
+            
+            var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
+            {
+                if (skinnedMeshRenderer.name == "GoattBod")
+                {
+                    fatMeshRenderer = skinnedMeshRenderer;
+                }
+            }
+            
+            animator = GetComponentInChildren<OwnerNetworkAnimator>();
             
             rb = GetComponent<Rigidbody>(); 
             clientNetworkTransform = GetComponent<ClientNetworkTransform>();
@@ -184,6 +202,18 @@ namespace Kart {
             };
         }
 
+        private void LateUpdate()
+        {
+            if (isFat)
+            {
+                fatMeshRenderer.SetBlendShapeWeight(0 , 100);
+            }
+            else
+            {
+                fatMeshRenderer.SetBlendShapeWeight(0 , 1);
+            }
+        }
+
         void SwitchAuthorityMode(AuthorityMode mode) {
             clientNetworkTransform.authorityMode = mode;
             bool shouldSync = mode == AuthorityMode.Client;
@@ -218,6 +248,14 @@ namespace Kart {
             Extraplolate();
 
             playerText.SetText($"Owner: {IsOwner} NetworkObjectId: {NetworkObjectId} Velocity: {kartVelocity.magnitude:F1}");
+            if (kartVelocity.magnitude > 1f)
+            {
+                animator.SetTrigger(Animator.StringToHash("isRunning"), true);
+            }
+            else
+            {
+                animator.SetTrigger(Animator.StringToHash("isRunning"), false);
+            }
         }
 
         void FixedUpdate() {
@@ -546,6 +584,29 @@ namespace Kart {
                 <= -.7f => -1f,
                 _ => input
             };
+        }
+
+        public void EatGrass()
+        {
+            if (isFat)
+            {
+                return;
+            }
+            
+            grassEaten++;
+            if (grassEaten >= 3)
+            {
+                grassEaten = 0;
+                isFat = true;
+                maxSpeed *= 2;
+                StartCoroutine(RemoveFat(5f));
+            }
+        }
+        
+        IEnumerator RemoveFat(float timeOfFat) {
+            yield return new WaitForSeconds(timeOfFat);
+            maxSpeed /= 2;
+            isFat = false;
         }
     }
 }
