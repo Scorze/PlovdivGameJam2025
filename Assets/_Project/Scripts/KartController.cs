@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using Unity.Cinemachine;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 using Utilities;
 
@@ -144,11 +145,14 @@ namespace Kart {
         [SerializeField] TextMeshPro clientRpcText;
         
         private int grassEaten = 0;
+        private OwnerNetworkAnimator animator;
 
         void Awake() {
             if (playerInput is IDrive driveInput) {
                 input = driveInput;
             }
+            
+            animator = GetComponentInChildren<OwnerNetworkAnimator>();
             
             rb = GetComponent<Rigidbody>(); 
             clientNetworkTransform = GetComponent<ClientNetworkTransform>();
@@ -220,6 +224,14 @@ namespace Kart {
             Extraplolate();
 
             playerText.SetText($"Owner: {IsOwner} NetworkObjectId: {NetworkObjectId} Velocity: {kartVelocity.magnitude:F1}");
+            if (kartVelocity.magnitude > 1f)
+            {
+                animator.SetTrigger(Animator.StringToHash("isRunning"), true);
+            }
+            else
+            {
+                animator.SetTrigger(Animator.StringToHash("isRunning"), false);
+            }
         }
 
         void FixedUpdate() {
