@@ -99,16 +99,24 @@ public class GameStateManager : NetworkBehaviour
         {
             return;
         }
-        ulong playerId = player.GetComponent<KartController>().OwnerClientId;
+        KartController kartController = player.GetComponent<KartController>();
+        ulong playerId = kartController.OwnerClientId;
         print($"Player {playerId + 1} ate grass!");
+        kartController.EatGrass();
         StartCoroutine(Respawn(grass, 5f));
-        EatGrassClientRpc(grass.GetComponent<NetworkObject>().NetworkObjectId);
+        EatGrassClientRpc(grass.GetComponent<NetworkObject>().NetworkObjectId, player.GetComponent<KartController>().NetworkObjectId);
     }
 
     [ClientRpc]
-    void EatGrassClientRpc(ulong grassNetworkId)
+    void EatGrassClientRpc(ulong grassNetworkId, ulong playerNetworkId)
     {
         GameObject grass = NetworkManager.Singleton.SpawnManager.SpawnedObjects[grassNetworkId].gameObject;
+        GameObject player = NetworkManager.Singleton.SpawnManager.SpawnedObjects[playerNetworkId].gameObject;
+        KartController kartController = player.GetComponent<KartController>();
+        if (!kartController.IsHost)
+        {
+            player.GetComponent<KartController>().EatGrass();
+        }
         StartCoroutine(Respawn(grass, 5f));
     }
     

@@ -142,6 +142,8 @@ namespace Kart {
         [SerializeField] TextMeshPro playerText;
         [SerializeField] TextMeshPro serverRpcText;
         [SerializeField] TextMeshPro clientRpcText;
+        
+        private int grassEaten = 0;
 
         void Awake() {
             if (playerInput is IDrive driveInput) {
@@ -546,6 +548,29 @@ namespace Kart {
                 <= -.7f => -1f,
                 _ => input
             };
+        }
+
+        public void EatGrass()
+        {
+            print("EatGrass in controller");
+            grassEaten++;
+            if (grassEaten >= 3)
+            {
+                var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+                SkinnedMeshRenderer fatMeshRenderer = null;
+                foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
+                {
+                    if (skinnedMeshRenderer.name == "GoattBod")
+                    {
+                        fatMeshRenderer = skinnedMeshRenderer;
+                    }
+                }
+                
+                if (fatMeshRenderer != null)
+                {
+                    fatMeshRenderer.SetBlendShapeWeight(0 , 100);
+                }
+            }
         }
     }
 }
