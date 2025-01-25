@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Eflatun.SceneReference;
 using Kart;
 using TMPro;
 using Unity.Netcode;
@@ -15,6 +16,8 @@ public class GameStateManager : NetworkBehaviour
     
     public TMP_Text gameWonText;
     public TMP_Text gameStarsText;
+    
+    [SerializeField] SceneReference lobbyScene;
     
     private Dictionary<ulong, int> playerToCheckPoint = new Dictionary<ulong, int>();
     private bool isGameStarted = false;
@@ -120,6 +123,7 @@ public class GameStateManager : NetworkBehaviour
                     print($"Player {playerId + 1} won the game!");
                     gameWonText.text = $"Player {playerId + 1} won the game!";
                     gameWonText.gameObject.SetActive(true);
+                    StartCoroutine(ResetGame());
                     SetTextClientRpc(playerId);
                 }
             }
@@ -210,5 +214,12 @@ public class GameStateManager : NetworkBehaviour
     public bool GetIsGameStarted()
     {
         return isGameStarted;
+    }
+
+    IEnumerator ResetGame()
+    {
+        yield return new WaitForSeconds(5f);
+        //NetworkManager.Singleton.Shutdown(true);
+        Loader.LoadNetwork(lobbyScene);
     }
 }

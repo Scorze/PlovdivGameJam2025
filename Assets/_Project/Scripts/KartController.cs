@@ -147,7 +147,7 @@ namespace Kart {
         [SerializeField] TextMeshPro clientRpcText;
 
         [Header("Steering Attributes")] 
-        public AudioClip fart;
+        public AudioClip[] fart;
         public AudioClip hoof;
         public AudioClip[] eat;
         
@@ -269,7 +269,7 @@ namespace Kart {
                 animator.SetTrigger(Animator.StringToHash("isRunning"), true);
                 if (!audioSource.isPlaying && !isFat)
                 {
-                    audioSource.PlayOneShot(hoof);
+                    audioSource.PlayOneShot(hoof, 0.3f);
                 }
             }
             else
@@ -634,11 +634,12 @@ namespace Kart {
         
         IEnumerator RemoveFat(float timeOfFat) {
             yield return new WaitForSeconds(timeOfFat);
+            int fartIndex = Random.Range(0, fart.Length - 1);
+            audioSource.PlayOneShot(fart[fartIndex]);
             maxSpeed /= 2;
             isFat = false;
             animator.SetTrigger(Animator.StringToHash("isRolling"), false);
             farticle.Play();
-            audioSource.PlayOneShot(fart);
             yield return new WaitForSeconds(0.75f);
             farticle.Stop();
         }

@@ -844,8 +844,11 @@ MonoBehaviour:
   playerText: {fileID: 1921756690957416036}
   serverRpcText: {fileID: 2502936088148080802}
   clientRpcText: {fileID: 6007250360825702259}
-  fart: {fileID: 8300000, guid: 00e269a0bd25ead4294a0023e6ffe4ef, type: 3}
-  hoof: {fileID: 8300000, guid: 983cb06683ad1c04b99f6aed3afb2cfe, type: 3}
+  fart:
+  - {fileID: 8300000, guid: bc270a2c62c8fdb40838f008c92674c2, type: 3}
+  - {fileID: 8300000, guid: 5186bc9742077eb45ab9332467dda029, type: 3}
+  - {fileID: 8300000, guid: 04d1cb8dccba5504eb1f37b499e93511, type: 3}
+  hoof: {fileID: 8300000, guid: 9258d905daf71c1489f1923b74b8a4a3, type: 3}
   eat:
   - {fileID: 8300000, guid: bd39605c4300b09408db50f019199f8c, type: 3}
   - {fileID: 8300000, guid: 0ae93007018f6374497b9911e2c5d290, type: 3}
