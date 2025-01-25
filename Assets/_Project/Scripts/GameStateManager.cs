@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using Kart;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
-public class GameStateManager : MonoBehaviour
+public class GameStateManager : NetworkBehaviour
 {
     public static GameStateManager Instance { get; private set; }
     
@@ -30,11 +31,19 @@ public class GameStateManager : MonoBehaviour
 
     public void AddPlayer(ulong playerId)
     {
+        if (!IsHost)
+        {
+            return;
+        }
         playerToCheckPoint.Add(playerId, 0);
     }
 
     public void PassCheckpoint(GameObject checkPoint, GameObject player)
     {
+        if (!IsHost)
+        {
+            return;
+        }
         int checkpointIndex = 0;
         bool found = false;
         for (int i = 0; i < checkpoints.Length; i++)
@@ -62,6 +71,7 @@ public class GameStateManager : MonoBehaviour
                 print($"Player {playerId + 1} won the game!");
                 gameWonText.text = $"Player {playerId + 1} won the game!";
                 gameWonText.gameObject.SetActive(true);
+                SetTextClientRpc(playerId);
             }
             playerToCheckPoint[playerId]++;
         }
@@ -69,5 +79,12 @@ public class GameStateManager : MonoBehaviour
         {
             print("Incorrect checkpoint");
         }
+    }
+
+    [ClientRpc]
+    void SetTextClientRpc(ulong playerId)
+    {
+        gameWonText.text = $"Player {playerId + 1} won the game!";
+        gameWonText.gameObject.SetActive(true);
     }
 }
