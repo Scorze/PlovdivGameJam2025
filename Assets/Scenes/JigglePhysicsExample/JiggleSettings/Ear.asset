@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ear
   m_EditorClassIdentifier: 
   gravityMultiplier: 2
-  friction: 0.402
-  angleElasticity: 0.065
+  friction: 0.362
+  angleElasticity: 0.336
   blend: 1
   airDrag: 0.01
   lengthElasticity: 1
