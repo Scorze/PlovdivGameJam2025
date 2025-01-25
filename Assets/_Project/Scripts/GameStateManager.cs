@@ -19,6 +19,8 @@ public class GameStateManager : NetworkBehaviour
     private Dictionary<ulong, int> playerToCheckPoint = new Dictionary<ulong, int>();
     private bool isGameStarted = false;
     public int gameStartsIn = 10;
+    public int laps = 3;
+    private Dictionary<ulong, int> playerToCurrentLap = new Dictionary<ulong, int>();
 
     private void Awake() 
     { 
@@ -62,6 +64,7 @@ public class GameStateManager : NetworkBehaviour
             return;
         }
         playerToCheckPoint.Add(playerId, 0);
+        playerToCurrentLap.Add(playerId, 0);
     }
 
     public void PassCheckpoint(GameObject checkPoint, GameObject player)
@@ -94,12 +97,20 @@ public class GameStateManager : NetworkBehaviour
             print("Correct checkpoint");
             if (playerToCheckPoint[playerId] == checkpoints.Length - 1)
             {
-                print($"Player {playerId + 1} won the game!");
-                gameWonText.text = $"Player {playerId + 1} won the game!";
-                gameWonText.gameObject.SetActive(true);
-                SetTextClientRpc(playerId);
+                playerToCurrentLap[playerId]++;
+                playerToCheckPoint[playerId] = 0;
+                if (playerToCurrentLap[playerId] >= laps)
+                {
+                    print($"Player {playerId + 1} won the game!");
+                    gameWonText.text = $"Player {playerId + 1} won the game!";
+                    gameWonText.gameObject.SetActive(true);
+                    SetTextClientRpc(playerId);
+                }
             }
-            playerToCheckPoint[playerId]++;
+            else
+            {
+                playerToCheckPoint[playerId]++;
+            }
         }
         else
         {
