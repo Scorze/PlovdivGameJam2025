@@ -39,8 +39,24 @@ public class GameStateManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
+        NetworkManager.Singleton.OnClientConnectedCallback  += OnClientConnected;
     }
 
+    private void OnClientConnected(ulong clientId)
+    {
+        StartCoroutine(UnstuckClient(gameStartsIn));
+    }
+
+    IEnumerator UnstuckClient(long gameStartsInCurrent)
+    {
+        yield return new WaitForSeconds(1f);
+        if (gameStartsInCurrent == gameStartsIn)
+        {
+            gameStarsText.gameObject.SetActive(false);
+            isGameStarted = true;
+        }
+    }
+    
     private void OnSceneLoaded(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
     {
         if (IsHost)
