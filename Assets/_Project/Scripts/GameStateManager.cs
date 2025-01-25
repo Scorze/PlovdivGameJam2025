@@ -19,6 +19,8 @@ public class GameStateManager : NetworkBehaviour
     private Dictionary<ulong, int> playerToCheckPoint = new Dictionary<ulong, int>();
     private bool isGameStarted = false;
     public int gameStartsIn = 10;
+    public int laps = 3;
+    private Dictionary<ulong, int> playerToCurrentLap = new Dictionary<ulong, int>();
 
     private void Awake() 
     { 
@@ -37,8 +39,24 @@ public class GameStateManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
+        NetworkManager.Singleton.OnClientConnectedCallback  += OnClientConnected;
     }
 
+    private void OnClientConnected(ulong clientId)
+    {
+        StartCoroutine(UnstuckClient(gameStartsIn));
+    }
+
+    IEnumerator UnstuckClient(long gameStartsInCurrent)
+    {
+        yield return new WaitForSeconds(1f);
+        if (gameStartsInCurrent == gameStartsIn)
+        {
+            gameStarsText.gameObject.SetActive(false);
+            isGameStarted = true;
+        }
+    }
+    
     private void OnSceneLoaded(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
     {
         if (IsHost)
@@ -62,6 +80,7 @@ public class GameStateManager : NetworkBehaviour
             return;
         }
         playerToCheckPoint.Add(playerId, 0);
+        playerToCurrentLap.Add(playerId, 0);
     }
 
     public void PassCheckpoint(GameObject checkPoint, GameObject player)
@@ -94,12 +113,20 @@ public class GameStateManager : NetworkBehaviour
             print("Correct checkpoint");
             if (playerToCheckPoint[playerId] == checkpoints.Length - 1)
             {
-                print($"Player {playerId + 1} won the game!");
-                gameWonText.text = $"Player {playerId + 1} won the game!";
-                gameWonText.gameObject.SetActive(true);
-                SetTextClientRpc(playerId);
+                playerToCurrentLap[playerId]++;
+                playerToCheckPoint[playerId] = 0;
+                if (playerToCurrentLap[playerId] >= laps)
+                {
+                    print($"Player {playerId + 1} won the game!");
+                    gameWonText.text = $"Player {playerId + 1} won the game!";
+                    gameWonText.gameObject.SetActive(true);
+                    SetTextClientRpc(playerId);
+                }
             }
-            playerToCheckPoint[playerId]++;
+            else
+            {
+                playerToCheckPoint[playerId]++;
+            }
         }
         else
         {
@@ -123,9 +150,12 @@ public class GameStateManager : NetworkBehaviour
         KartController kartController = player.GetComponent<KartController>();
         ulong playerId = kartController.OwnerClientId;
         print($"Player {playerId + 1} ate grass!");
-        kartController.EatGrass();
-        StartCoroutine(Respawn(grass, 5f));
-        EatGrassClientRpc(grass.GetComponent<NetworkObject>().NetworkObjectId, player.GetComponent<KartController>().NetworkObjectId);
+        bool eaten = kartController.EatGrass();
+        if (eaten)
+        {
+            StartCoroutine(Respawn(grass, 5f));
+            EatGrassClientRpc(grass.GetComponent<NetworkObject>().NetworkObjectId, player.GetComponent<KartController>().NetworkObjectId);
+        }
     }
 
     [ClientRpc]
@@ -136,9 +166,12 @@ public class GameStateManager : NetworkBehaviour
         KartController kartController = player.GetComponent<KartController>();
         if (!kartController.IsHost)
         {
-            player.GetComponent<KartController>().EatGrass();
+            bool eaten = player.GetComponent<KartController>().EatGrass();
+            if (eaten)
+            {
+                StartCoroutine(Respawn(grass, 5f));
+            }
         }
-        StartCoroutine(Respawn(grass, 5f));
     }
     
     IEnumerator Respawn(GameObject grass, float timeToRespawn) {

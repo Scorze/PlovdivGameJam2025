@@ -594,22 +594,24 @@ namespace Kart {
             };
         }
 
-        public void EatGrass()
+        public bool EatGrass()
         {
             if (isFat)
             {
-                return;
+                return false;
             }
             
             grassEaten++;
-            if (grassEaten >= 3)
+            if (grassEaten >= 1)
             {
                 grassEaten = 0;
                 isFat = true;
                 maxSpeed *= 2;
                 animator.SetTrigger(Animator.StringToHash("isRolling"), true);
-                StartCoroutine(RemoveFat(5f));
+                StartCoroutine(RemoveFat(2.5f));
             }
+
+            return true;
         }
         
         IEnumerator RemoveFat(float timeOfFat) {
