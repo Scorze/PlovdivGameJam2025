@@ -148,6 +148,7 @@ namespace Kart {
         private int grassEaten = 0;
         private bool isFat = false;
         private OwnerNetworkAnimator animator;
+        private ParticleSystem farticle;
         //private SkinnedMeshRenderer fatMeshRenderer;
 
         void Awake() {
@@ -155,7 +156,7 @@ namespace Kart {
                 input = driveInput;
             }
             
-            var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            //var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
             /*foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
             {
                 if (skinnedMeshRenderer.name == "GoattBod")
@@ -163,6 +164,8 @@ namespace Kart {
                     fatMeshRenderer = skinnedMeshRenderer;
                 }
             }*/
+
+            farticle = GetComponentInChildren<ParticleSystem>();
             
             animator = GetComponentInChildren<OwnerNetworkAnimator>();
             
@@ -619,6 +622,9 @@ namespace Kart {
             maxSpeed /= 2;
             isFat = false;
             animator.SetTrigger(Animator.StringToHash("isRolling"), false);
+            farticle.Play();
+            yield return new WaitForSeconds(0.75f);
+            farticle.Stop();
         }
     }
 }
