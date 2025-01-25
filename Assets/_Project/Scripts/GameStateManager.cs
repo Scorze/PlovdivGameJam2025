@@ -17,7 +17,7 @@ public class GameStateManager : NetworkBehaviour
     
     private Dictionary<ulong, int> playerToCheckPoint = new Dictionary<ulong, int>();
     private bool isGameStarted = false;
-    private int gameStartsIn = 10;
+    private int gameStartsIn = 3;
 
     private void Awake() 
     { 
