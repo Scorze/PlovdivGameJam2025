@@ -39,7 +39,7 @@ Material:
     - _TerrainSize: 0
     - _USESHADOWS: 0
     - _USETERRAINCOLOR: 0
-    - _WindIntensity: 0.0025
+    - _WindIntensity: 0.5
     - _WindNoiseSpeed: 0.08
     - _WindSize: 1
     - _WindSpeed: 1
