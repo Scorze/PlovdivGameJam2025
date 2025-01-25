@@ -594,11 +594,11 @@ namespace Kart {
             };
         }
 
-        public void EatGrass()
+        public bool EatGrass()
         {
             if (isFat)
             {
-                return;
+                return false;
             }
             
             grassEaten++;
@@ -610,6 +610,8 @@ namespace Kart {
                 animator.SetTrigger(Animator.StringToHash("isRolling"), true);
                 StartCoroutine(RemoveFat(2.5f));
             }
+
+            return true;
         }
         
         IEnumerator RemoveFat(float timeOfFat) {
