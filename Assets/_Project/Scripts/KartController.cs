@@ -8,6 +8,7 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Kart {
     [System.Serializable]
@@ -144,6 +145,13 @@ namespace Kart {
         [SerializeField] TextMeshPro playerText;
         [SerializeField] TextMeshPro serverRpcText;
         [SerializeField] TextMeshPro clientRpcText;
+
+        [Header("Steering Attributes")] 
+        public AudioClip fart;
+        public AudioClip hoof;
+        public AudioClip[] eat;
+        
+        private AudioSource audioSource;
         
         private int grassEaten = 0;
         private bool isFat = false;
@@ -165,6 +173,7 @@ namespace Kart {
                 }
             }*/
 
+            audioSource = GetComponent<AudioSource>();
             farticle = GetComponentInChildren<ParticleSystem>();
             
             animator = GetComponentInChildren<OwnerNetworkAnimator>();
@@ -258,6 +267,10 @@ namespace Kart {
             if (kartVelocity.magnitude > 1f)
             {
                 animator.SetTrigger(Animator.StringToHash("isRunning"), true);
+                if (!audioSource.isPlaying && !isFat)
+                {
+                    audioSource.PlayOneShot(hoof);
+                }
             }
             else
             {
@@ -605,6 +618,8 @@ namespace Kart {
             }
             
             grassEaten++;
+            int eatIndex = Random.Range(0, eat.Length - 1);
+            audioSource.PlayOneShot(eat[eatIndex]);
             if (grassEaten >= 1)
             {
                 grassEaten = 0;
@@ -623,6 +638,7 @@ namespace Kart {
             isFat = false;
             animator.SetTrigger(Animator.StringToHash("isRolling"), false);
             farticle.Play();
+            audioSource.PlayOneShot(fart);
             yield return new WaitForSeconds(0.75f);
             farticle.Stop();
         }
