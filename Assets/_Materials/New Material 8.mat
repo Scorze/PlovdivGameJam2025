@@ -122,7 +122,7 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Fresnel: 5.44
+    - _Fresnel: 2.46
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -162,7 +162,7 @@ Material:
     - _BottomColor: {r: 0.8152813, g: 0.8674261, b: 0.8773585, a: 0}
     - _Color: {r: 0.9433962, g: 0.64588314, b: 0.4227483, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FarColor: {r: 0.68778926, g: 0.87114406, b: 0.9056604, a: 0}
+    - _FarColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 0}
     - _HueVariationColor: {r: 0.5188679, g: 0.0465023, b: 0.32579115, a: 0.2}
     - _NearColor: {r: 0.9292453, g: 0.9886287, b: 1, a: 0}
     - _NearFarRange: {r: 10, g: 25, b: 0, a: 0}
