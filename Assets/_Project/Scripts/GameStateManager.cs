@@ -118,7 +118,7 @@ public class GameStateManager : NetworkBehaviour
             {
                 playerToCurrentLap[playerId]++;
                 playerToCheckPoint[playerId] = 0;
-                if (playerToCurrentLap[playerId] >= laps)
+                if (playerToCurrentLap[playerId] >= laps && !gameWonText.gameObject.activeSelf)
                 {
                     print($"Player {playerId + 1} won the game!");
                     gameWonText.text = $"Player {playerId + 1} won the game!";
