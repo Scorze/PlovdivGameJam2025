@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6efa16d29315ed64381767e758461379
+timeCreated: 1495720823
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Example Scenes/MeshBrush Demo Scene/MeshBrush Demo
+    Scene.unity
+  uploadId: 650606

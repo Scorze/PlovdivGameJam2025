@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 23f75aa47eb6cfa43b7d2a879e897584
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Example Scenes/MeshBrush Demo Scene/Prefabs/Cylinder.prefab
+  uploadId: 650606

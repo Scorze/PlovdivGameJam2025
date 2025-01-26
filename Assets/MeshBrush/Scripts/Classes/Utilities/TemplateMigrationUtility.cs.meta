@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a9066464dac2b47408f214db84c54fa0
+timeCreated: 1495229419
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Classes/Utilities/TemplateMigrationUtility.cs
+  uploadId: 650606

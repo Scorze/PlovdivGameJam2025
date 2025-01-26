@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f8e94e1a57beb8448af734c405c14a87
+timeCreated: 1495376441
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Templates/Examples/Stroke Alignment Example.xml
+  uploadId: 650606

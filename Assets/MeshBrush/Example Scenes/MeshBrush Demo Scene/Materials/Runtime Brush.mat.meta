@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 935a047224ed4fa41a66584a5589e582
+timeCreated: 1495726913
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Example Scenes/MeshBrush Demo Scene/Materials/Runtime
+    Brush.mat
+  uploadId: 650606

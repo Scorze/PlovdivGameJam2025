@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 7bfd8ec4a10fa4ee3b5e86960fc36a0c
+timeCreated: 1491053058
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Enums/BrushMode.cs
+  uploadId: 650606

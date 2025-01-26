@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 6656cb0154d1f4c2ea570197694893f2
+timeCreated: 1492201671
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Classes/Components/Examples/RuntimeExample.cs
+  uploadId: 650606

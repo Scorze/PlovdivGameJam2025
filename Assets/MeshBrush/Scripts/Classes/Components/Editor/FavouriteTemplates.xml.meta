@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0b951987ebf3f4e6a9337a6598326042
+timeCreated: 1493205738
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Classes/Components/Editor/FavouriteTemplates.xml
+  uploadId: 650606

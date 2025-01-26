@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: f41b4546623d34b4cbde3f42ba365dbe
+timeCreated: 1491849377
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Classes/Utilities/FavouriteTemplatesUtility.cs
+  uploadId: 650606

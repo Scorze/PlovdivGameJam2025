@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4ad94f2c4948aea4b8060948cb39b59d
+timeCreated: 1500856936
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Documents/Release Notes.pdf
+  uploadId: 650606

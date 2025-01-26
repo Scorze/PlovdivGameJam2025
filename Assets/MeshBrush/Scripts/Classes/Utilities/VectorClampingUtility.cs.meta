@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 9786ca77a2bb94e95a14024d119a852a
+timeCreated: 1492465338
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Classes/Utilities/VectorClampingUtility.cs
+  uploadId: 650606

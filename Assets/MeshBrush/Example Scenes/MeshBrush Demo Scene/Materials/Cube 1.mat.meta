@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 007132b1a0e20884c89ccf65db4d9e06
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Example Scenes/MeshBrush Demo Scene/Materials/Cube
+    1.mat
+  uploadId: 650606

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: bf0b84c86362f4577ae48fd06928042a
+timeCreated: 1492372802
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 14453
+  packageName: MeshBrush
+  packageVersion: V2.1
+  assetPath: Assets/MeshBrush/Scripts/Classes/Data/EditorIcons.cs
+  uploadId: 650606
