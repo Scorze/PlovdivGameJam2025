@@ -269,7 +269,7 @@ namespace Kart {
                 animator.SetTrigger(Animator.StringToHash("isRunning"), true);
                 if (!audioSource.isPlaying && !isFat)
                 {
-                    audioSource.PlayOneShot(hoof, 0.3f);
+                    audioSource.PlayOneShot(hoof, 0.1f);
                 }
             }
             else
